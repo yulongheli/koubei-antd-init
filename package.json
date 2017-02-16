@@ -1,0 +1,44 @@
+{
+  "family": "antd",
+  "name": "koubei-antd-init",
+  "version": "1.0.0",
+  "entry": {
+    "index": "./src/entry/index.jsx"
+  },
+  "dependencies": {
+    "antd": "~1.5.1",
+    "react": "0.14.8",
+    "react-dom": "~0.14.3",
+    "react-router": "^1.0.3"
+  },
+  "devDependencies": {
+    "atool-build": "~0.8.0",
+    "atool-test": "^0.4.10",
+    "babel-eslint": "^4.0.5",
+    "babel-plugin-import": "^1.0.1",
+    "babel-plugin-transform-runtime": "^6.9.0",
+    "babel-polyfill": "^6.8.0",
+    "cz-conventional-changelog": "^1.2.0",
+    "dora": "^0.3.2",
+    "dora-plugin-proxy": "^0.6.0",
+    "dora-plugin-webpack": "^0.6.4",
+    "eslint": "~1.6.0",
+    "eslint-config-airbnb": "~0.1.0",
+    "eslint-plugin-import": "^1.9.2",
+    "eslint-plugin-react": "~3.5.1",
+  },
+  "scripts": {
+    "start": "npm run local",
+    "dev": "dora -p 8001 --plugins webpack?publicPath=/${npm_package_family}/${npm_package_name}/${npm_package_version}/,proxy?port=8981",
+    "deploy": "rm -rf node_modules && tnpm install && qt deploy . kb",
+    "local": "dora -p 8001 --plugins webpack?publicPath=/${npm_package_family}/${npm_package_name}/,proxy?port=8981",
+    "sit": "dora -p 8001 --plugins webpack?publicPath=/g/${npm_package_family}/${npm_package_name}/${npm_package_version}/,proxy?port=8981",
+    "lint": "eslint --ext .js,.jsx src",
+    "build": "rm -rf dist && atool-build --devtool=#source-map -o ./dist/${npm_package_family}/${npm_package_name}/${npm_package_version}/",
+  },
+  "config": {
+    "ghooks": {
+      "pre-commit": "npm run lint",
+    }
+  }
+}
