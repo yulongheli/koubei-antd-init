@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import store from './store';
-import {transformLCV} from '../../common/treeUtil';
+import { transformLCV } from '../../common/treeUtil';
+import ShopEntity from './ShopEntity';
 import Picture from './Picture';
 import brands from './data/brands';
 import areas from './data/areas';
@@ -29,16 +30,55 @@ const RadioGroup = Radio.Group;
 
 class ShopForm extends Component {
   constructor(props) {
-    super(props)
+    super(props);
+    this.state = {
+      submitting: false
+    };
     this.isEdit = /shop\/edit/.test(this.props.route.path);
+    if (this.isEdit) {
+      this.shop = store.getShop(this.props.param.id);
+    } else {
+      this.shop = new ShopEntity();
+    }
   }
 
-  handleSubmit() {
+  handleSubmit(e) {
+    e.preventDefault();
+    const { validateFieldsAndScroll } = this.props.form;
+    this.setState({
+      submitting: true
+    });
+    validateFieldsAndScroll((err, values) => {
+      if (!err) {
+        Object.assign(this.shop, values);
+        if (this.isEdit) {
+          store.saveShop(this.shop.shopId, this.shop);
+        } else {
+          store.addShop(this.shop);
+        }
+        this.props.router.push('shop/list');
+      } else {
+        this.setState({
+          submitting: false
+        })
+      }
+    })
+  }
 
+  handleBrandSelect(value, option) {
+    this.shop.brandId = value;
+    this.shop.brandName = option.props.title;
+  }
+
+  handleResidenceChange(value, options) {
+    [this.shop.provinceId, this.shop.cityId, this.shop.distinctId] = value;
+    this.shop.provinceName = options[0].n;
+    this.shop.cityName = options[1].n;
+    this.shop.distinctName = options[2] ? options[2].n : '';
   }
 
   render() {
-    const {getFieldDecorator} = this.props.form;
+    const { getFieldDecorator } = this.props.form;
 
     const formItemLayout = {
       labelCol: {span: 6},
@@ -52,15 +92,20 @@ class ShopForm extends Component {
     };
 
     return (
-      <Form onSubmit={this.handleSubmit}>
+      <Form onSubmit={this.handleSubmit.bind(this)}>
         <FormItem
           {...formItemLayout}
           required
           label="Brand Name">
           {
-            getFieldDecorator('brandId', {})(
+            getFieldDecorator('brandId', {
+              rules: [{
+                required: true
+              }]
+            })(
               <Select
                 showSearch
+                onSelect={this.handleBrandSelect.bind(this)}
                 placeholder="select a brand"
                 optionFilterProp="title"
               >
@@ -81,7 +126,7 @@ class ShopForm extends Component {
                 required: true, message: 'Please input shop name.'
               }]
             })(
-              <Input style={{width: '50%'}} placeholder="e.g. 海底捞" required/>
+              <Input style={{width: '50%'}} placeholder="e.g. 海底捞"/>
             )
           }
           <p className="shop-form-extra">
@@ -100,8 +145,15 @@ class ShopForm extends Component {
           label="Location"
         >
           {
-            getFieldDecorator('residence', {})(
-              <Cascader options={transformLCV(areas)}/>
+            getFieldDecorator('residence', {
+              rules: [{
+                required: true
+              }]
+            })(
+              <Cascader
+                options={transformLCV(areas)}
+                onChange={this.handleResidenceChange.bind(this)}
+              />
             )
           }
         </FormItem>
@@ -113,16 +165,46 @@ class ShopForm extends Component {
         >
           <InputGroup>
             <Col span="3">
-              <Input/>
+              <FormItem>
+                {
+                  getFieldDecorator('mobileNo1', {
+                    validateFirst: true,
+                    rules: [{
+                      required: true,
+                      message: '此项必填'
+                    }]
+                  })(
+                    <Input/>
+                  )
+                }
+              </FormItem>
             </Col>
             <Col span="3">
-              <Input/>
+              <FormItem>
+                {
+                  getFieldDecorator('mobileNo2', {})(
+                    <Input/>
+                  )
+                }
+              </FormItem>
             </Col>
             <Col span="3">
-              <Input/>
+              <FormItem>
+                {
+                  getFieldDecorator('mobileNo3', {})(
+                    <Input/>
+                  )
+                }
+              </FormItem>
             </Col>
             <Col span="3">
-              <Input/>
+              <FormItem>
+                {
+                  getFieldDecorator('mobileNo4', {})(
+                    <Input/>
+                  )
+                }
+              </FormItem>
             </Col>
           </InputGroup>
         </FormItem>
@@ -132,10 +214,16 @@ class ShopForm extends Component {
           required
           label="Charge Method"
         >
-          <RadioGroup value={1}>
-            <Radio value={1}>顾客自动买单</Radio>
-            <Radio value={2}>商家扫码买单</Radio>
-          </RadioGroup>
+          {
+            getFieldDecorator('payType', {
+              initialValue: 1
+            })(
+              <RadioGroup>
+                <Radio value={1}>顾客自动买单</Radio>
+                <Radio value={2}>商家扫码买单</Radio>
+              </RadioGroup>
+            )
+          }
         </FormItem>
 
         <FormItem
@@ -151,13 +239,21 @@ class ShopForm extends Component {
         <FormItem
           {...formItemLayout}
           required
-          label="Alipay Account"
+          label="Receiver ID"
         >
-          <Input/>
+          {
+            getFieldDecorator('receiveUserId', {
+              rules: [{
+                required: true
+              }]
+            })(
+              <Input/>
+            )
+          }
         </FormItem>
 
         <FormItem {...tailFormItemLayout}>
-          <Button type="primary" htmlType="submit">Submit</Button>
+          <Button type="primary" htmlType="submit" loading={this.state.submitting}>Submit</Button>
         </FormItem>
       </Form>
     )
