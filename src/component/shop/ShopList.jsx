@@ -35,6 +35,15 @@ class ShopList extends Component {
         key: 'brandName'
       },
       {
+        title: 'Address',
+        key: 'address',
+        render: (text, record) => (
+          <span>
+            {record.provinceName + record.cityName + record.districtName + record.address}
+          </span>
+        )
+      },
+      {
         title: 'Action',
         key: 'action',
         render: (text, record) => (
@@ -43,7 +52,7 @@ class ShopList extends Component {
             <span className="ant-divider"/>
             <a href={"#/shop/edit/" + record.shopId}>Edit</a>
             <span className="ant-divider"/>
-            <a href="#" onClick={this.handleDelete.bind(this, record.shopId)}>Delete</a>
+            <a onClick={this.handleDelete.bind(this, record.shopId)}>Delete</a>
         </span>
         )
       }

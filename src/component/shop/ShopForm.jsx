@@ -159,6 +159,18 @@ class ShopForm extends Component {
               />
             )
           }
+          <FormItem>
+            {
+              getFieldDecorator('address', {
+                initialValue: this.shop.address,
+                rules: [{
+                  required: true
+                }]
+              })(
+                <Input/>
+              )
+            }
+          </FormItem>
         </FormItem>
 
         <FormItem

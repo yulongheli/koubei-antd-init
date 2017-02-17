@@ -44,6 +44,7 @@ const EmptyShop = {
   "services":{"box":"false","noSmoke":"false","park":"true","wifi":"false"},
 	"shopId":"",
 	"shopName":"",
+  "shopLastModified":"",
 	"shopProblemLabels":{"addressErrorReasons":[],"phoneNumberErrorReasons":[],"shopNameErrorReasons":[]},
   "shopType":"COMMON"
 };

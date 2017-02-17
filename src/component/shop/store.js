@@ -17,14 +17,18 @@ const getShop = (id) => {
 };
 
 const addShop = (data) => {
-	StorageUtil.setItem(STORAGE_KEYS.KB_SHOP_PRE + data.shopId, data);
+	StorageUtil.setItem(STORAGE_KEYS.KB_SHOP_PRE + data.shopId, Object.assign(data, {
+	  shopLastModified: new Date().getTime()
+  }));
 	const indexes = getListIndexes();
 	indexes.push(data.shopId);
 	saveList(indexes);
 };
 
 const saveShop = (id, data) => {
-	StorageUtil.setItem(STORAGE_KEYS.KB_SHOP_PRE + id, data);
+	StorageUtil.setItem(STORAGE_KEYS.KB_SHOP_PRE + id, Object.assign(data, {
+	  shopLastModified: new Date().getTime()
+  }));
 };
 
 const delShop = (id) => {
