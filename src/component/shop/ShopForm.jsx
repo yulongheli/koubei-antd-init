@@ -50,25 +50,25 @@ class ShopForm extends Component {
         offset: 6,
       },
     };
-    const uploadButton = (
-      <div>
-        <Icon type="plus"/>
-        <div className="ant-upload-text">Upload</div>
-      </div>
-    );
+
     return (
       <Form onSubmit={this.handleSubmit}>
         <FormItem
           {...formItemLayout}
           required
           label="Brand Name">
-          <Select
-            showSearch
-            placeholder="select a brand"
-            optionFilterProp="title"
-          >
-            {brands.map(b => <Option key={b.id} title={b.name}>{b.name}</Option>)}
-          </Select>
+          {
+            getFieldDecorator('brandId', {})(
+              <Select
+                showSearch
+                placeholder="select a brand"
+                optionFilterProp="title"
+              >
+                {brands.map(b => <Option key={b.id} title={b.name}>{b.name}</Option>)}
+              </Select>
+            )
+          }
+
         </FormItem>
 
         <FormItem
@@ -99,8 +99,11 @@ class ShopForm extends Component {
           required
           label="Location"
         >
-          <Cascader options={transformLCV(areas)}/>
-          <Input placeholder="请输入详情地址，如：文一西路，999号"/>
+          {
+            getFieldDecorator('residence', {})(
+              <Cascader options={transformLCV(areas)}/>
+            )
+          }
         </FormItem>
 
         <FormItem
