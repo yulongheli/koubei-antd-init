@@ -27,11 +27,6 @@ const Option = Select.Option;
 const InputGroup = Input.Group;
 const RadioGroup = Radio.Group;
 
-
-const transformTreeData = source => {
-
-}
-
 class ShopForm extends Component {
   constructor(props) {
     super(props)
@@ -80,20 +75,15 @@ class ShopForm extends Component {
           {...formItemLayout}
           required
           label="Shop Name">
-          <InputGroup compact>
-            {
-              getFieldDecorator('shopName', {
-                rules: [{
-                  required: true, message: 'Please input shop name.'
-                }]
-              })(
-                <Input style={{width: '50%'}} placeholder="e.g. haidilao" required/>
-              )}
-            {
-              getFieldDecorator('shopName2', {})(
-                <Input style={{width: '50%'}} placeholder="optional, e.g. yanan branch"/>
-              )}
-          </InputGroup>
+          {
+            getFieldDecorator('shopName', {
+              rules: [{
+                required: true, message: 'Please input shop name.'
+              }]
+            })(
+              <Input style={{width: '50%'}} placeholder="e.g. 海底捞" required/>
+            )
+          }
           <p className="shop-form-extra">
             <span className="warnning">请勿填错格式，导致开店失败。</span>
             正确示例如下：

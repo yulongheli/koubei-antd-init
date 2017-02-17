@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import 'babel-polyfill';
 import {Router, Route, hashHistory} from 'react-router';
 import userRoutes from '../component/user/routes';
 import shopRoutes from '../component/shop/routes';
