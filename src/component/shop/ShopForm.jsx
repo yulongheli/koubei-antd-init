@@ -36,7 +36,7 @@ class ShopForm extends Component {
     };
     this.isEdit = /shop\/edit/.test(this.props.route.path);
     if (this.isEdit) {
-      this.shop = store.getShop(this.props.param.id);
+      this.shop = store.getShop(this.props.params.id);
     } else {
       this.shop = new ShopEntity();
     }
@@ -71,10 +71,10 @@ class ShopForm extends Component {
   }
 
   handleResidenceChange(value, options) {
-    [this.shop.provinceId, this.shop.cityId, this.shop.distinctId] = value;
+    [this.shop.provinceId, this.shop.cityId, this.shop.districtId] = value;
     this.shop.provinceName = options[0].n;
     this.shop.cityName = options[1].n;
-    this.shop.distinctName = options[2] ? options[2].n : '';
+    this.shop.districtName = options[2] ? options[2].n : '';
   }
 
   render() {
@@ -99,6 +99,7 @@ class ShopForm extends Component {
           label="Brand Name">
           {
             getFieldDecorator('brandId', {
+              initialValue: this.shop.brandId,
               rules: [{
                 required: true
               }]
@@ -122,6 +123,7 @@ class ShopForm extends Component {
           label="Shop Name">
           {
             getFieldDecorator('shopName', {
+              initialValue: this.shop.shopName,
               rules: [{
                 required: true, message: 'Please input shop name.'
               }]
@@ -146,6 +148,7 @@ class ShopForm extends Component {
         >
           {
             getFieldDecorator('residence', {
+              initialValue: [this.shop.provinceId, this.shop.cityId, this.shop.districtId],
               rules: [{
                 required: true
               }]
@@ -167,7 +170,8 @@ class ShopForm extends Component {
             <Col span="3">
               <FormItem>
                 {
-                  getFieldDecorator('mobileNo1', {
+                  getFieldDecorator('mobileNo', {
+                    initialValue: this.shop.mobileNo,
                     validateFirst: true,
                     rules: [{
                       required: true,
@@ -216,7 +220,7 @@ class ShopForm extends Component {
         >
           {
             getFieldDecorator('payType', {
-              initialValue: 1
+              initialValue: this.shop.payType
             })(
               <RadioGroup>
                 <Radio value={1}>顾客自动买单</Radio>
@@ -243,6 +247,7 @@ class ShopForm extends Component {
         >
           {
             getFieldDecorator('receiveUserId', {
+              initialValue: this.shop.receiveUserId,
               rules: [{
                 required: true
               }]
