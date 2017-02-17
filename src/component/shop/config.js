@@ -1,0 +1,8 @@
+const STORAGE_KEYS = {
+	KB_SHOP_PRE: 'KB_SHOP_',
+	KB_SHOP_LIST_INDEX: 'KB_SHOP_LIST_INDEX'
+}
+
+export default {
+	STORAGE_KEYS
+}
