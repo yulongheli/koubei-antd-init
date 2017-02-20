@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import store from './store'
-import { Table, Icon } from 'antd';
+import { Table, Icon, Popconfirm, message } from 'antd';
+import AppLayout from '../AppLayout';
 import './shop.less'
 
 class ShopList extends Component {
@@ -13,6 +14,7 @@ class ShopList extends Component {
 
 	handleDelete(id) {
 	  store.delShop(id);
+	  message.success('门店已删除');
 	  this.reload();
   }
 
@@ -25,17 +27,17 @@ class ShopList extends Component {
 	render() {
     const columns = [
       {
-        title: 'Shop Name',
+        title: '门店名称',
         dataIndex: 'shopName',
         key: 'shopName'
       },
       {
-        title: 'Brand',
+        title: '品牌名称',
         dataIndex: 'brandName',
         key: 'brandName'
       },
       {
-        title: 'Address',
+        title: '门店地址',
         key: 'address',
         render: (text, record) => (
           <span>
@@ -44,20 +46,22 @@ class ShopList extends Component {
         )
       },
       {
-        title: 'Action',
+        title: '操作',
         key: 'action',
         render: (text, record) => (
           <span>
-            <a href={"#/shop/view/" + record.shopId}>View</a>
+            <a href={"#/shop/view/" + record.shopId}><Icon type="eye"/></a>
             <span className="ant-divider"/>
-            <a href={"#/shop/edit/" + record.shopId}>Edit</a>
+            <a href={"#/shop/edit/" + record.shopId}><Icon type="edit"/></a>
             <span className="ant-divider"/>
-            <a onClick={this.handleDelete.bind(this, record.shopId)}>Delete</a>
+            <Popconfirm title="确定删除此门店？" onConfirm={this.handleDelete.bind(this, record.shopId)} okText="删除" cancelText="取消">
+              <a><Icon type="delete"/></a>
+            </Popconfirm>
         </span>
         )
       }
     ];
-		return <Table rowKey="shopId" columns={columns} dataSource={this.state.shopList}/>;
+    return <AppLayout><Table rowKey="shopId" columns={columns} dataSource={this.state.shopList}/></AppLayout>;
 	}
 }
 

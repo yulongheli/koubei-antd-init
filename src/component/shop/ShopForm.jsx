@@ -1,7 +1,6 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import store from './store';
 import { transformLCV } from '../../common/treeUtil';
-import ShopEntity from './ShopEntity';
 import Picture from './Picture';
 import brands from './data/brands';
 import areas from './data/areas';
@@ -10,17 +9,10 @@ import {
   Form,
   Input,
   Radio,
-  Tooltip,
-  Icon,
   Cascader,
   Select,
-  TreeSelect,
-  Row,
   Col,
-  Checkbox,
   Button,
-  Upload,
-  Modal
 } from 'antd';
 
 const FormItem = Form.Item;
@@ -34,12 +26,6 @@ class ShopForm extends Component {
     this.state = {
       submitting: false
     };
-    this.isEdit = /shop\/edit/.test(this.props.route.path);
-    if (this.isEdit) {
-      this.shop = store.getShop(this.props.params.id);
-    } else {
-      this.shop = new ShopEntity();
-    }
   }
 
   handleSubmit(e) {
@@ -50,11 +36,11 @@ class ShopForm extends Component {
     });
     validateFieldsAndScroll((err, values) => {
       if (!err) {
-        Object.assign(this.shop, values);
-        if (this.isEdit) {
-          store.saveShop(this.shop.shopId, this.shop);
+        Object.assign(this.props.shop, values);
+        if (this.props.isEdit) {
+          store.saveShop(this.props.shop.shopId, this.props.shop);
         } else {
-          store.addShop(this.shop);
+          store.addShop(this.props.shop);
         }
         this.props.router.push('shop/list');
       } else {
@@ -66,15 +52,15 @@ class ShopForm extends Component {
   }
 
   handleBrandSelect(value, option) {
-    this.shop.brandId = value;
-    this.shop.brandName = option.props.title;
+    this.props.shop.brandId = value;
+    this.props.shop.brandName = option.props.title;
   }
 
   handleResidenceChange(value, options) {
-    [this.shop.provinceId, this.shop.cityId, this.shop.districtId] = value;
-    this.shop.provinceName = options[0].n;
-    this.shop.cityName = options[1].n;
-    this.shop.districtName = options[2] ? options[2].n : '';
+    [this.props.shop.provinceId, this.props.shop.cityId, this.props.shop.districtId] = value;
+    this.props.shop.provinceName = options[0].n;
+    this.props.shop.cityName = options[1].n;
+    this.props.shop.districtName = options[2] ? options[2].n : '';
   }
 
   render() {
@@ -91,15 +77,14 @@ class ShopForm extends Component {
       },
     };
 
-    return (
-      <Form onSubmit={this.handleSubmit.bind(this)}>
+    return (<Form onSubmit={this.handleSubmit.bind(this)}>
         <FormItem
           {...formItemLayout}
           required
-          label="Brand Name">
+          label="品牌名称">
           {
             getFieldDecorator('brandId', {
-              initialValue: this.shop.brandId,
+              initialValue: this.props.shop.brandId,
               rules: [{
                 required: true
               }]
@@ -114,16 +99,15 @@ class ShopForm extends Component {
               </Select>
             )
           }
-
         </FormItem>
 
         <FormItem
           {...formItemLayout}
           required
-          label="Shop Name">
+          label="门店名称">
           {
             getFieldDecorator('shopName', {
-              initialValue: this.shop.shopName,
+              initialValue: this.props.shop.shopName,
               rules: [{
                 required: true, message: 'Please input shop name.'
               }]
@@ -144,11 +128,11 @@ class ShopForm extends Component {
         <FormItem
           {...formItemLayout}
           required
-          label="Location"
+          label="地址"
         >
           {
             getFieldDecorator('residence', {
-              initialValue: [this.shop.provinceId, this.shop.cityId, this.shop.districtId],
+              initialValue: [this.props.shop.provinceId, this.props.shop.cityId, this.props.shop.districtId],
               rules: [{
                 required: true
               }]
@@ -162,7 +146,7 @@ class ShopForm extends Component {
           <FormItem>
             {
               getFieldDecorator('address', {
-                initialValue: this.shop.address,
+                initialValue: this.props.shop.address,
                 rules: [{
                   required: true
                 }]
@@ -176,14 +160,14 @@ class ShopForm extends Component {
         <FormItem
           {...formItemLayout}
           required
-          label="Shop Tel"
+          label="门店电话"
         >
           <InputGroup>
             <Col span="3">
               <FormItem>
                 {
                   getFieldDecorator('mobileNo', {
-                    initialValue: this.shop.mobileNo,
+                    initialValue: this.props.shop.mobileNo,
                     validateFirst: true,
                     rules: [{
                       required: true,
@@ -228,11 +212,11 @@ class ShopForm extends Component {
         <FormItem
           {...formItemLayout}
           required
-          label="Charge Method"
+          label="收款方式"
         >
           {
             getFieldDecorator('payType', {
-              initialValue: this.shop.payType
+              initialValue: this.props.shop.payType
             })(
               <RadioGroup>
                 <Radio value={1}>顾客自动买单</Radio>
@@ -244,7 +228,7 @@ class ShopForm extends Component {
 
         <FormItem
           {...formItemLayout}
-          label="Brand Logo"
+          label="品牌Logo"
           required
         >
           <Picture/>
@@ -255,11 +239,11 @@ class ShopForm extends Component {
         <FormItem
           {...formItemLayout}
           required
-          label="Receiver ID"
+          label="收款帐号"
         >
           {
             getFieldDecorator('receiveUserId', {
-              initialValue: this.shop.receiveUserId,
+              initialValue: this.props.shop.receiveUserId,
               rules: [{
                 required: true
               }]

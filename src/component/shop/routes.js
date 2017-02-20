@@ -1,5 +1,6 @@
 import ShopList from './ShopList';
-import ShopForm from './ShopForm';
+import ShopEdit from './ShopEdit';
+import ShopAdd from './ShopAdd';
 import ShopView from './ShopView';
 
 export default [
@@ -9,7 +10,7 @@ export default [
 	},
 	{
 		path: 'shop/edit/:id',
-		component: ShopForm
+		component: ShopEdit
 	},
   {
     path: 'shop/view/:id',
@@ -17,6 +18,6 @@ export default [
   },
 	{
 		path: 'shop/add',
-		component: ShopForm
+		component: ShopAdd
 	}
 ];

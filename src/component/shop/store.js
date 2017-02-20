@@ -17,8 +17,10 @@ const getShop = (id) => {
 };
 
 const addShop = (data) => {
+  const now = new Date().getTime();
 	StorageUtil.setItem(STORAGE_KEYS.KB_SHOP_PRE + data.shopId, Object.assign(data, {
-	  shopLastModified: new Date().getTime()
+	  createTime: now,
+	  shopLastModified: now
   }));
 	const indexes = getListIndexes();
 	indexes.push(data.shopId);
