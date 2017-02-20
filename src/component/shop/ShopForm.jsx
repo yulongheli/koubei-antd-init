@@ -4,6 +4,7 @@ import { transformLCV } from '../../common/treeUtil';
 import Picture from './Picture';
 import brands from './data/brands';
 import areas from './data/areas';
+import { PAY_TYPE, PAY_TYPE_TEXT } from './config';
 
 import {
   Form,
@@ -143,7 +144,7 @@ class ShopForm extends Component {
               />
             )
           }
-          <FormItem>
+          <FormItem style={{margin: '5px 0 0'}}>
             {
               getFieldDecorator('address', {
                 initialValue: this.props.shop.address,
@@ -163,7 +164,7 @@ class ShopForm extends Component {
           label="门店电话"
         >
           <InputGroup>
-            <Col span="3">
+            <Col span="6">
               <FormItem>
                 {
                   getFieldDecorator('mobileNo', {
@@ -179,7 +180,7 @@ class ShopForm extends Component {
                 }
               </FormItem>
             </Col>
-            <Col span="3">
+            <Col span="6">
               <FormItem>
                 {
                   getFieldDecorator('mobileNo2', {})(
@@ -188,7 +189,7 @@ class ShopForm extends Component {
                 }
               </FormItem>
             </Col>
-            <Col span="3">
+            <Col span="6">
               <FormItem>
                 {
                   getFieldDecorator('mobileNo3', {})(
@@ -197,7 +198,7 @@ class ShopForm extends Component {
                 }
               </FormItem>
             </Col>
-            <Col span="3">
+            <Col span="6">
               <FormItem>
                 {
                   getFieldDecorator('mobileNo4', {})(
@@ -216,11 +217,14 @@ class ShopForm extends Component {
         >
           {
             getFieldDecorator('payType', {
-              initialValue: this.props.shop.payType
+              initialValue: this.props.shop.payType || PAY_TYPE.SELF,
+              rules: [{
+                required: true
+              }]
             })(
               <RadioGroup>
-                <Radio value={1}>顾客自动买单</Radio>
-                <Radio value={2}>商家扫码买单</Radio>
+                <Radio value={PAY_TYPE.SELF}>{PAY_TYPE_TEXT[PAY_TYPE.SELF]}</Radio>
+                <Radio value={PAY_TYPE.SCAN}>{PAY_TYPE_TEXT[PAY_TYPE.SCAN]}</Radio>
               </RadioGroup>
             )
           }
@@ -254,7 +258,7 @@ class ShopForm extends Component {
         </FormItem>
 
         <FormItem {...tailFormItemLayout}>
-          <Button type="primary" htmlType="submit" loading={this.state.submitting}>Submit</Button>
+          <Button type="primary" htmlType="submit" loading={this.state.submitting}>提交</Button>
         </FormItem>
       </Form>
     )

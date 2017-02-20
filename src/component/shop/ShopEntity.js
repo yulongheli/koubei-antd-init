@@ -35,7 +35,7 @@ const EmptyShop = {
   "otherService":"",
   "outShopId":"",
   "partnerId":"",
-  "payType":"ONLINE_PAY",
+  "payType":"SELF",
   "perPay":"",
   "pictureDetailList":[], //[{"id":"3T8Pp00AT7eo9NoAJkMR3AAAACMAAQEC","url":"http://dl.django.t.taobao.com/rest/1.0/image?fileIds=3T8Pp00AT7eo9NoAJkMR3AAAACMAAQEC&token=3KgBye8YLzV5G0sn0nKxzQABUYAAAAFaSeZY9gAAACMAAQED&timestamp=1487306999101&acl=2789f892fa26e048f74c3f8aee6a40b2&zoom=original"},{"id":"4T8Pp00AT7eo9NoAJkMR3AAAACMAAQEC","url":"http://dl.django.t.taobao.com/rest/1.0/image?fileIds=4T8Pp00AT7eo9NoAJkMR3AAAACMAAQEC&token=3KgBye8YLzV5G0sn0nKxzQABUYAAAAFaSeZY9gAAACMAAQED&timestamp=1487306999101&acl=c7134f4b8c045abdea910ab38d3bee5f&zoom=original"},{"id":"5T8Pp00AT7eo9NoAJkMR3AAAACMAAQEC","url":"http://dl.django.t.taobao.com/rest/1.0/image?fileIds=5T8Pp00AT7eo9NoAJkMR3AAAACMAAQEC&token=3KgBye8YLzV5G0sn0nKxzQABUYAAAAFaSeZY9gAAACMAAQED&timestamp=1487306999101&acl=0671cbfac604946c70ed4edcd8f5cd4c&zoom=original"}],
   "provinceId":"",
