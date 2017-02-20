@@ -4,6 +4,7 @@ import { transformLCV } from '../../common/treeUtil';
 import Picture from './Picture';
 import brands from './data/brands';
 import areas from './data/areas';
+import category from './data/category';
 import { PAY_TYPE, PAY_TYPE_TEXT } from './config';
 
 import {
@@ -62,6 +63,10 @@ class ShopForm extends Component {
     this.props.shop.provinceName = options[0].n;
     this.props.shop.cityName = options[1].n;
     this.props.shop.districtName = options[2] ? options[2].n : '';
+  }
+
+  handleCategoryChange(value, options) {
+    this.props.shop.categoryName = options.reduce((path, option) => path + (path ? '/' : '') + option.n, '');
   }
 
   render() {
@@ -156,6 +161,23 @@ class ShopForm extends Component {
               )
             }
           </FormItem>
+        </FormItem>
+
+        <FormItem
+          {...formItemLayout}
+          required
+          label="品类"
+        >
+          {
+            getFieldDecorator('categoryIds', {
+              initialValue: this.props.shop.categoryIds
+            })(
+              <Cascader
+                options={transformLCV(category)}
+                onChange={this.handleCategoryChange.bind(this)}
+              />
+            )
+          }
         </FormItem>
 
         <FormItem

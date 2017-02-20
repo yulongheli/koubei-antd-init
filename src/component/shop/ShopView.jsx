@@ -12,7 +12,6 @@ class ShopView extends Component {
 
   render() {
     const shop = store.getShop(this.props.params.id);
-    console.log(shop)
     return <AppLayout><table className="kb-detail-table">
       <tbody>
       <tr>
@@ -25,18 +24,15 @@ class ShopView extends Component {
       </tr>
       <tr>
         <td className="kb-detail-table-label">品类</td>
-        <td>{shop.category || ''}</td>
+        <td>{shop.categoryName || ''}</td>
         <td className="kb-detail-table-label">最后一次修改</td>
         <td>{formatTime(shop.shopLastModified)}</td>
         <td className="kb-detail-table-label">收款账户</td>
         <td>{shop.receiveUserId || ''}</td>
       </tr>
       <tr>
-        <td className="kb-detail-table-label">人均价格</td>
-        <td>{shop.perPay ? shop.perPay + '元' : ''}</td>
-      </tr>
-      <tr>
         <td className="kb-detail-table-label">门店联系方式</td>
+        <td>{shop.mobileNo}</td>
       </tr>
       </tbody>
     </table></AppLayout>

@@ -9,6 +9,7 @@ const EmptyShop = {
 	"businessTime":"",//"1-7 09:00-23:00",
 	"canModifyCategory":false,
 	"categoryId":"",
+  "categoryName":"",
 	"categoryIds":[], //["2015050700000000","2015050700000002","2015050700000010"],
 	"certificatePictureList":[], //[{"id":"6T8Pp00AT7eo9NoAJkMR3AAAACMAAQEC","url":"http://dl.django.t.taobao.com/rest/1.0/image?fileIds=6T8Pp00AT7eo9NoAJkMR3AAAACMAAQEC&token=3KgBye8YLzV5G0sn0nKxzQABUYAAAAFaSeZY9gAAACMAAQED&timestamp=1487306999101&acl=64d604fab880b714a0803f8d471ee8a4&zoom=original"}],
 	"certificateValidTime":"", //"2025-08-08",
