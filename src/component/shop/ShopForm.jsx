@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import store from './store';
-import { transformLCV } from '../../common/treeUtil';
 import Picture from './Picture';
 import brands from './data/brands';
 import areas from './data/areas';
@@ -60,13 +59,13 @@ class ShopForm extends Component {
 
   handleResidenceChange(value, options) {
     [this.props.shop.provinceId, this.props.shop.cityId, this.props.shop.districtId] = value;
-    this.props.shop.provinceName = options[0].n;
-    this.props.shop.cityName = options[1].n;
-    this.props.shop.districtName = options[2] ? options[2].n : '';
+    this.props.shop.provinceName = options[0].label;
+    this.props.shop.cityName = options[1].label;
+    this.props.shop.districtName = options[2] ? options[2].label : '';
   }
 
   handleCategoryChange(value, options) {
-    this.props.shop.categoryName = options.reduce((path, option) => path + (path ? '/' : '') + option.n, '');
+    this.props.shop.categoryName = options.reduce((path, option) => path + (path ? '/' : '') + option.label, '');
   }
 
   render() {
@@ -144,7 +143,7 @@ class ShopForm extends Component {
               }]
             })(
               <Cascader
-                options={transformLCV(areas)}
+                options={areas}
                 onChange={this.handleResidenceChange.bind(this)}
               />
             )
@@ -173,7 +172,7 @@ class ShopForm extends Component {
               initialValue: this.props.shop.categoryIds
             })(
               <Cascader
-                options={transformLCV(category)}
+                options={category}
                 onChange={this.handleCategoryChange.bind(this)}
               />
             )
