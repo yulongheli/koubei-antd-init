@@ -29,11 +29,7 @@
     "eslint-plugin-react": "^5.1.1"
   },
   "scripts": {
-    "start": "npm run local",
     "dev": "dora -p 8001 --plugins webpack?publicPath=/${npm_package_family}/${npm_package_name}/${npm_package_version}/,proxy?port=8981",
-    "deploy": "rm -rf node_modules && tnpm install && qt deploy . kb",
-    "local": "dora -p 8001 --plugins webpack?publicPath=/${npm_package_family}/${npm_package_name}/,proxy?port=8981",
-    "sit": "dora -p 8001 --plugins webpack?publicPath=/g/${npm_package_family}/${npm_package_name}/${npm_package_version}/,proxy?port=8981",
     "lint": "eslint --ext .js,.jsx src",
     "build": "rm -rf dist && atool-build --devtool=#source-map -o ./dist/${npm_package_family}/${npm_package_name}/${npm_package_version}/"
   },
