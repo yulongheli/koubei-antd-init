@@ -12,10 +12,12 @@ function autoPrefix(num) {
 
 export const formatTime = (timestamp) => {
   const now = new Date(timestamp);
-  return `${now.getFullYear()}-
-    ${autoPrefix(now.getMonth() + 1)}-
-    ${autoPrefix(now.getDate())} 
-    ${autoPrefix(now.getHours())}:
-    ${autoPrefix(now.getMinutes())}:
-    ${autoPrefix(now.getSeconds())}`;
+  return `
+${now.getFullYear()}-
+${autoPrefix(now.getMonth() + 1)}-
+${autoPrefix(now.getDate())} 
+${autoPrefix(now.getHours())}:
+${autoPrefix(now.getMinutes())}:
+${autoPrefix(now.getSeconds())}
+`;
 };
