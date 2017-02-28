@@ -270,7 +270,7 @@ class ShopForm extends Component {
             getFieldDecorator('receiveUserId', {
               initialValue: this.props.shop.receiveUserId,
               rules: [{
-                required: true
+                required: true,
               }]
             })(
               <Input/>
